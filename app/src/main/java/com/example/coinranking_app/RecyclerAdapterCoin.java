@@ -49,7 +49,7 @@ public class RecyclerAdapterCoin extends RecyclerView.Adapter<RecyclerAdapterCoi
 
         public void bind(Coin coin) {
             textview_name.setText(coin.getName());
-            textview_price.setText(String.valueOf(coin.getPrice()));
+            textview_price.setText("Price : " + String.valueOf(coin.getPrice()));
         }
     }
 }
