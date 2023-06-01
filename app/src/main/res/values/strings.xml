@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">coinranking_app</string>
+    <string name="fav">Favori</string>
 </resources>
