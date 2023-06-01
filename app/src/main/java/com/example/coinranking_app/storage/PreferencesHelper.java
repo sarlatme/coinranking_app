@@ -5,6 +5,7 @@ import android.content.SharedPreferences;
 
 import com.example.coinranking_app.CoinRankingApp;
 import com.example.coinranking_app.models.Coin;
+import com.google.gson.Gson;
 
 public class PreferencesHelper {
 
@@ -25,12 +26,17 @@ public class PreferencesHelper {
         return INSTANCE;
     }
 
-    public String getCoin(Coin coin) {
-        return preferences.getString("COIN", null);
+    public Coin getCoin() {
+        Gson gson = new Gson();
+        String json = preferences.getString("COIN", null);
+        Coin coin = gson.fromJson(json, Coin.class);
+        return coin;
     }
 
     public void setCoin(Coin coin) {
-        preferences.edit().putString("COIN", coin.getName()).apply();
+        Gson gson = new Gson();
+        String json = gson.toJson(coin);
+        preferences.edit().putString("COIN", json).apply();
     }
 
     public String getApiKey() {
