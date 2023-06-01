@@ -7,9 +7,12 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.os.Bundle;
+import android.view.View;
 import android.widget.ScrollView;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import com.example.coinranking_app.databinding.ActivityMainBinding;
 import com.example.coinranking_app.models.Coin;
 import com.example.coinranking_app.models.CoinsList;
 import com.example.coinranking_app.viewModels.IViewModel;
@@ -19,6 +22,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
+    private ActivityMainBinding binding;
 
     private IViewModel viewModel;
 
@@ -30,15 +34,20 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
-
-        recycler_view_coins = findViewById(R.id.recyclerview_coins);
-
+        binding = ActivityMainBinding.inflate(getLayoutInflater());
+        View view = binding.getRoot();
+        setContentView(view);
         List<Coin> empty_list = new ArrayList<>();
         recycler_adapter_coin = new RecyclerAdapterCoin(empty_list);
+        recycler_adapter_coin.setListener(new OnCoinClickListener() {
+            @Override
+            public void onCoinClick(Coin coin) {
+                Toast.makeText(MainActivity.this, coin.getName(), Toast.LENGTH_SHORT).show();
+            }
+        });
 
-        recycler_view_coins.setLayoutManager(new LinearLayoutManager(this));
-        recycler_view_coins.setAdapter(recycler_adapter_coin);
+        binding.recyclerviewCoins.setLayoutManager(new LinearLayoutManager(this));
+        binding.recyclerviewCoins.setAdapter(recycler_adapter_coin);
 
         viewModel = new ViewModelProvider(this).get(RetrofitViewModel.class);
 
@@ -55,6 +64,4 @@ public class MainActivity extends AppCompatActivity {
         viewModel.generateListCoins();
 
     }
-
-
 }

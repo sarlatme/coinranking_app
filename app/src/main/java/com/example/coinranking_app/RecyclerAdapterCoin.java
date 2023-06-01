@@ -4,29 +4,40 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.coinranking_app.databinding.ItemCoinBinding;
 import com.example.coinranking_app.models.Coin;
 
 import java.util.List;
 
-public class RecyclerAdapterCoin extends RecyclerView.Adapter<RecyclerAdapterCoin.MyViewHolder>{
+public class RecyclerAdapterCoin extends RecyclerView.Adapter<RecyclerAdapterCoin.MyViewHolder> {
+    public void setListener(OnCoinClickListener listener) {
+        this.listener = listener;
+    }
 
+    private OnCoinClickListener listener;
     private List<Coin> coin_list;
 
     public RecyclerAdapterCoin(List<Coin> coinList) {
         this.coin_list = coinList;
     }
-
-    public MyViewHolder onCreateViewHolder(ViewGroup parent, int viewType){
-        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_coin, parent, false);
-        return new MyViewHolder(view);
+    public MyViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+        LayoutInflater inflater = LayoutInflater.from(parent.getContext());
+        return new MyViewHolder(ItemCoinBinding.inflate(inflater, parent, false));
     }
 
     public void onBindViewHolder(MyViewHolder holder, int position) {
         Coin coin = coin_list.get(position);
         holder.bind(coin);
+        holder.binding.getRoot().setOnClickListener(v -> {
+            if (listener != null) {
+                listener.onCoinClick(coin_list.get(position));
+            }
+        });
     }
 
     public int getItemCount(){
@@ -38,18 +49,14 @@ public class RecyclerAdapterCoin extends RecyclerView.Adapter<RecyclerAdapterCoi
     }
 
     class MyViewHolder extends RecyclerView.ViewHolder {
-        private TextView textview_name;
-        private TextView textview_price;
-
-        public MyViewHolder(View itemView) {
-            super(itemView);
-            textview_name = itemView.findViewById(R.id.textview_name);
-            textview_price = itemView.findViewById(R.id.textview_price);
+        ItemCoinBinding binding;
+        public MyViewHolder(ItemCoinBinding itemCoinBinding) {
+            super(itemCoinBinding.getRoot());
+            this.binding = itemCoinBinding;
         }
-
         public void bind(Coin coin) {
-            textview_name.setText(coin.getName());
-            textview_price.setText("Price : " + String.valueOf(coin.getPrice()));
+            binding.textviewName.setText(coin.getName());
+            binding.textviewPrice.setText("Price : " + String.valueOf(coin.getPrice()));
         }
     }
 }
