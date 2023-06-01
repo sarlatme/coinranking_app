@@ -1,5 +1,6 @@
 package com.example.coinranking_app;
 
+import android.graphics.Color;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -11,6 +12,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.coinranking_app.databinding.ItemCoinBinding;
 import com.example.coinranking_app.models.Coin;
+import com.example.coinranking_app.storage.PreferencesHelper;
 
 import java.util.List;
 
@@ -21,6 +23,7 @@ public class RecyclerAdapterCoin extends RecyclerView.Adapter<RecyclerAdapterCoi
 
     private OnCoinClickListener listener;
     private List<Coin> coin_list;
+    private int preferedCoin;
 
     public RecyclerAdapterCoin(List<Coin> coinList) {
         this.coin_list = coinList;
@@ -33,10 +36,13 @@ public class RecyclerAdapterCoin extends RecyclerView.Adapter<RecyclerAdapterCoi
     public void onBindViewHolder(MyViewHolder holder, int position) {
         Coin coin = coin_list.get(position);
         holder.bind(coin);
-        holder.binding.getRoot().setOnClickListener(v -> {
+        holder.binding.getRoot().setOnLongClickListener(v -> {
             if (listener != null) {
                 listener.onCoinClick(coin_list.get(position));
             }
+            preferedCoin = holder.getBindingAdapterPosition();
+            PreferencesHelper.getInstance().setCoin(coin);
+            return false;
         });
     }
 
