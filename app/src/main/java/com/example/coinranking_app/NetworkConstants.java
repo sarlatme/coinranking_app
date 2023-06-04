@@ -4,6 +4,7 @@ public class NetworkConstants {
 
     public static final String BASE_URL = "https://coinranking1.p.rapidapi.com";
 
+    // TODO: plus utilisé
     public static final String HOST_HEADER_NAME = "x-rapidapi-host";
     public static final String HOST_HEADER_VALUE = "coinranking1.p.rapidapi.com";
     public static final String KEY_HEADER_NAME = "x-rapidapi-key";

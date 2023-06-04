@@ -1,5 +1,5 @@
 package com.example.coinranking_app.viewModels;
-
+// TODO: import inutile
 import android.util.Log;
 
 import androidx.lifecycle.LiveData;
@@ -26,14 +26,14 @@ public class RetrofitViewModel extends ViewModel implements IViewModel {
         RetrofitNetworkManager.coinRankingAPI.getCoinsList().enqueue(new Callback<CoinsListResponse>() {
             @Override
             public void onResponse(Call<CoinsListResponse> call, Response<CoinsListResponse> response) {
-                if(response.body() != null){
+                if(response.body() != null){ // TODO: gestion body null
                     handleResponse(response.body());
                 }
             }
 
             @Override
             public void onFailure(Call<CoinsListResponse> call, Throwable t) {
-                // TO DO
+                // TO DO // TODO: gestion erreurs
             }
         });
     }

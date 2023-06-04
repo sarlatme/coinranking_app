@@ -1,7 +1,7 @@
 package com.example.coinranking_app.network;
 
 import androidx.annotation.NonNull;
-
+// TODO: import inutile
 import com.example.coinranking_app.storage.PreferencesHelper;
 
 import java.io.IOException;

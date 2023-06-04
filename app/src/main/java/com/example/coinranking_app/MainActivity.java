@@ -7,6 +7,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.os.Bundle;
+// TODO: imports inutiles
 import android.os.Debug;
 import android.util.Log;
 import android.view.View;
@@ -29,12 +30,15 @@ public class MainActivity extends AppCompatActivity {
     private ActivityMainBinding binding;
 
     private IViewModel viewModel;
-
+    // TODO: jamais utilisé
     private RecyclerView recycler_view_coins;
+    // TODO: nom des variables en camelCase
     private RecyclerAdapterCoin recycler_adapter_coin;
+    // TODO: jamais utilisé
     private RetrofitViewModel retrofit_view_model;
 
 
+    // TODO: méthode trop longue à découper
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -45,6 +49,7 @@ public class MainActivity extends AppCompatActivity {
         binding.textviewFavName.setText(PreferencesHelper.getInstance().getCoin().getName());
         binding.textviewFavPrice.setText(Double.toString(PreferencesHelper.getInstance().getCoin().getPrice()));
         List<Coin> empty_list = new ArrayList<>();
+        // TODO: on va plutôt mettre la liste vide dans le constructeur, la vue ne manipule pas de données (même vides)
         recycler_adapter_coin = new RecyclerAdapterCoin(empty_list);
         recycler_adapter_coin.setListener(new OnCoinClickListener() {
             @Override

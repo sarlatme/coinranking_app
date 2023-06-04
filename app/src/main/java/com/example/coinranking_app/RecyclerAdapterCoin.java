@@ -1,5 +1,5 @@
 package com.example.coinranking_app;
-
+// TODO: imports inutiles
 import android.graphics.Color;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -22,6 +22,7 @@ public class RecyclerAdapterCoin extends RecyclerView.Adapter<RecyclerAdapterCoi
     }
 
     private OnCoinClickListener listener;
+    // TODO: camelCase
     private List<Coin> coin_list;
     private int preferedCoin;
 
@@ -37,16 +38,19 @@ public class RecyclerAdapterCoin extends RecyclerView.Adapter<RecyclerAdapterCoi
         Coin coin = coin_list.get(position);
         holder.bind(coin);
         holder.binding.getRoot().setOnLongClickListener(v -> {
+            // TODO: faire remonter le click au niveau de l'activity
             if (listener != null) {
                 listener.onCoinClick(coin_list.get(position));
             }
             preferedCoin = holder.getBindingAdapterPosition();
+            // TODO: on essaie de ne pas utiliser les prefs dans le RVA qui est une "view", les prefs c'est la gestion des données
             PreferencesHelper.getInstance().setCoin(coin);
             return false;
         });
     }
 
     public int getItemCount(){
+        // TODO: attentoin si la liste est null
         return coin_list.size();
     }
 

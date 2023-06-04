@@ -12,6 +12,7 @@ public class PreferencesHelper {
     private static PreferencesHelper INSTANCE;
 
     private static final String SHARED_PREFERENCES_NAME = "coinRankingPreferences";
+    // TODO: plus utile
     private static final String API_KEY = "apiKey";
     private final SharedPreferences preferences;
 
@@ -26,6 +27,7 @@ public class PreferencesHelper {
         return INSTANCE;
     }
 
+    // TODO: nope, les prefs ne sont pas faites pour sauvegarder des objets complexes
     public Coin getCoin() {
         Gson gson = new Gson();
         String json = preferences.getString("COIN", null);
@@ -39,6 +41,7 @@ public class PreferencesHelper {
         preferences.edit().putString("COIN", json).apply();
     }
 
+    // TODO: code mort
     public String getApiKey() {
         return preferences.getString(API_KEY, null);
     }
