@@ -1,6 +1,23 @@
 package com.example.coinranking_app.models;
 
+import androidx.annotation.NonNull;
+import androidx.room.ColumnInfo;
+import androidx.room.Entity;
+import androidx.room.PrimaryKey;
+
+@Entity(tableName = "coin")
 public class Coin {
+    public String getTestNewField() {
+        return testNewField;
+    }
+
+    public void setTestNewField(String testNewField) {
+        this.testNewField = testNewField;
+    }
+
+    private String testNewField;
+    @NonNull
+    @PrimaryKey()
     private String uuid;
     private String symbol;
     private String name;

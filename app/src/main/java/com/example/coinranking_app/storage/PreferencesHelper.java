@@ -3,16 +3,23 @@ package com.example.coinranking_app.storage;
 import android.content.Context;
 import android.content.SharedPreferences;
 
+import androidx.lifecycle.ViewModelProvider;
+
 import com.example.coinranking_app.CoinRankingApp;
+import com.example.coinranking_app.DetailsActivity;
+import com.example.coinranking_app.MainActivity;
 import com.example.coinranking_app.models.Coin;
+import com.example.coinranking_app.viewModels.DetailsViewModel;
+import com.example.coinranking_app.viewModels.IDetailsVewModel;
 import com.google.gson.Gson;
+
+import java.util.List;
 
 public class PreferencesHelper {
 
     private static PreferencesHelper INSTANCE;
 
     private static final String SHARED_PREFERENCES_NAME = "coinRankingPreferences";
-    private static final String API_KEY = "apiKey";
     private final SharedPreferences preferences;
 
     private PreferencesHelper() {
@@ -26,24 +33,18 @@ public class PreferencesHelper {
         return INSTANCE;
     }
 
-    public Coin getCoin() {
-        Gson gson = new Gson();
-        String json = preferences.getString("COIN", null);
-        Coin coin = gson.fromJson(json, Coin.class);
-        return coin;
+    public String getCoinFavName() {
+        String name = preferences.getString("coin.name", null);
+        return name;
     }
 
-    public void setCoin(Coin coin) {
-        Gson gson = new Gson();
-        String json = gson.toJson(coin);
-        preferences.edit().putString("COIN", json).apply();
+    public String getCoinFavPrice(){
+        String price = preferences.getString("coin.price", null);
+        return price;
     }
 
-    public String getApiKey() {
-        return preferences.getString(API_KEY, null);
-    }
-
-    public void setApiKey(String apiKey) {
-        preferences.edit().putString(API_KEY, apiKey).apply();
+    public void setCoinFav(String name, Double price) {
+        preferences.edit().putString("coin.name", name).apply();
+        preferences.edit().putString("coin.price", price.toString()).apply();
     }
 }
