@@ -1,6 +1,7 @@
 package com.example.coinranking_app.network;
 
 import com.example.coinranking_app.models.Coin;
+import com.example.coinranking_app.models.CoinResponse;
 import com.example.coinranking_app.models.CoinsListResponse;
 
 import retrofit2.Call;
@@ -12,5 +13,5 @@ public interface CoinRankingAPI {
     @GET("/coins")
     Call<CoinsListResponse> getCoinsList();
     @GET("/coin/{uuid}")
-    Call<Coin> getCoin(@Path("uuid") String uuid );
+    Call<CoinResponse> getCoin(@Path("uuid") String uuid );
 }

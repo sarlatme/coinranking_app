@@ -2,12 +2,11 @@ package com.example.coinranking_app.viewModels;
 
 import androidx.lifecycle.LiveData;
 
-import com.example.coinranking_app.models.CoinsList;
-import com.example.coinranking_app.models.CoinsListResponse;
+import com.example.coinranking_app.models.CoinsListData;
 
 public interface IViewModel {
 
-    LiveData<CoinsList> getData();
+    LiveData<CoinsListData> getData();
     void generateListCoins();
 
 }
