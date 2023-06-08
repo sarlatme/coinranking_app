@@ -24,14 +24,15 @@ public class RetrofitViewModel extends ViewModel implements IViewModel {
         RetrofitNetworkManager.coinRankingAPI.getCoinsList().enqueue(new Callback<CoinsListResponse>() {
             @Override
             public void onResponse(Call<CoinsListResponse> call, Response<CoinsListResponse> response) {
-                if(response.body() != null){
+                if(response.body() != null) {
                     handleResponse(response.body());
                 }
+                // TODO : gestion de l'erreur body = null
             }
 
             @Override
             public void onFailure(Call<CoinsListResponse> call, Throwable t) {
-                // TO DO
+                // TODO : gestion erreurs
             }
         });
     }
