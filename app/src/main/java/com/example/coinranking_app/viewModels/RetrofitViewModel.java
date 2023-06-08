@@ -47,7 +47,7 @@ public class RetrofitViewModel extends AndroidViewModel implements IViewModel {
         RetrofitNetworkManager.coinRankingAPI.getCoinsList().enqueue(new Callback<CoinsListResponse>() {
             @Override
             public void onResponse(Call<CoinsListResponse> call, Response<CoinsListResponse> response) {
-                if (response.body() != null) { // TODO: si body null ?
+                if (response.body() != null) {
                     handleCoinListResponse(response.body());
                 } else {
                     handleCoinListError();
@@ -71,7 +71,7 @@ public class RetrofitViewModel extends AndroidViewModel implements IViewModel {
     }
 
     private void handleCoinListError() {
-
+        // TODO: gestion des erreurs
     }
 
     public void generateCoin(String uuid) {

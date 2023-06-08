@@ -42,7 +42,6 @@ public class MainActivity extends AppCompatActivity {
 
         viewModel = new ViewModelProvider(this).get(RetrofitViewModel.class);
         viewModel.generateListCoins();
-
     }
 
     private void printFav(ActivityMainBinding binding){
