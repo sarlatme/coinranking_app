@@ -1,11 +1,7 @@
 package com.example.coinranking_app;
 
-import android.graphics.Color;
 import android.view.LayoutInflater;
-import android.view.View;
 import android.view.ViewGroup;
-import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
@@ -38,11 +34,18 @@ public class RecyclerAdapterCoin extends RecyclerView.Adapter<RecyclerAdapterCoi
         holder.bind(coin);
         holder.binding.getRoot().setOnLongClickListener(v -> {
             if (listener != null) {
+                listener.onCoinLongClick(coin_list.get(position));
+            }
+            preferedCoin = holder.getBindingAdapterPosition();
+            PreferencesHelper.getInstance().setCoin(coin);
+            return true;
+        });
+        holder.binding.getRoot().setOnClickListener(v -> {
+            if (listener != null) {
                 listener.onCoinClick(coin_list.get(position));
             }
             preferedCoin = holder.getBindingAdapterPosition();
             PreferencesHelper.getInstance().setCoin(coin);
-            return false;
         });
     }
 

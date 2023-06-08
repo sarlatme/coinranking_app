@@ -2,7 +2,7 @@ package com.example.coinranking_app.models;
 
 import java.util.List;
 
-public class CoinsList {
+public class CoinsListData {
 
     private List<Coin> coins;
 
