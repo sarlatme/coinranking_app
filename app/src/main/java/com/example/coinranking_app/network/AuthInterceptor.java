@@ -2,8 +2,6 @@ package com.example.coinranking_app.network;
 
 import androidx.annotation.NonNull;
 
-import com.example.coinranking_app.storage.PreferencesHelper;
-
 import java.io.IOException;
 
 import okhttp3.Interceptor;

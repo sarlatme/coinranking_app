@@ -8,7 +8,6 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.coinranking_app.databinding.ItemCoinBinding;
 import com.example.coinranking_app.models.Coin;
-import com.example.coinranking_app.storage.PreferencesHelper;
 
 import java.util.List;
 
@@ -18,11 +17,11 @@ public class RecyclerAdapterCoin extends RecyclerView.Adapter<RecyclerAdapterCoi
     }
 
     private OnCoinClickListener listener;
-    private List<Coin> coin_list;
+    private List<Coin> coinList;
     private int preferedCoin;
 
     public RecyclerAdapterCoin(List<Coin> coinList) {
-        this.coin_list = coinList;
+        this.coinList = coinList;
     }
     public MyViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         LayoutInflater inflater = LayoutInflater.from(parent.getContext());
@@ -30,31 +29,30 @@ public class RecyclerAdapterCoin extends RecyclerView.Adapter<RecyclerAdapterCoi
     }
 
     public void onBindViewHolder(MyViewHolder holder, int position) {
-        Coin coin = coin_list.get(position);
+        Coin coin = coinList.get(position);
         holder.bind(coin);
         holder.binding.getRoot().setOnLongClickListener(v -> {
             if (listener != null) {
-                listener.onCoinLongClick(coin_list.get(position));
+                listener.onCoinLongClick(coinList.get(position));
             }
             preferedCoin = holder.getBindingAdapterPosition();
-            PreferencesHelper.getInstance().setCoin(coin);
             return true;
         });
         holder.binding.getRoot().setOnClickListener(v -> {
             if (listener != null) {
-                listener.onCoinClick(coin_list.get(position));
+                listener.onCoinClick(coinList.get(position));
             }
             preferedCoin = holder.getBindingAdapterPosition();
-            PreferencesHelper.getInstance().setCoin(coin);
         });
     }
 
+    // TODO : attention si le liste est nulle
     public int getItemCount(){
-        return coin_list.size();
+        return coinList.size();
     }
 
     public void setCoinList(List<Coin> coins) {
-        this.coin_list = coins;
+        this.coinList = coins;
     }
 
     class MyViewHolder extends RecyclerView.ViewHolder {
