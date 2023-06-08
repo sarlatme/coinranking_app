@@ -56,6 +56,7 @@ public class RecyclerAdapterCoin extends RecyclerView.Adapter<RecyclerAdapterCoi
 
     public void setCoinList(List<Coin> coins) {
         this.coinList = coins;
+        notifyDataSetChanged();
     }
 
     class MyViewHolder extends RecyclerView.ViewHolder {

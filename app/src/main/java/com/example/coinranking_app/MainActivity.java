@@ -1,5 +1,7 @@
 package com.example.coinranking_app;
 
+import androidx.activity.result.ActivityResultLauncher;
+import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
@@ -20,6 +22,14 @@ import com.squareup.picasso.Picasso;
 import java.util.ArrayList;
 
 public class MainActivity extends AppCompatActivity {
+    private ActivityResultLauncher<String> requestPermissionLauncher =
+            registerForActivityResult(new ActivityResultContracts.RequestPermission(), isGranted -> {
+                if (isGranted) {
+
+                } else {
+
+                }
+            });
     private ActivityMainBinding binding;
 
     private IViewModel viewModel;
@@ -49,6 +59,7 @@ public class MainActivity extends AppCompatActivity {
     private void printFav(ActivityMainBinding binding){
         binding.textviewFavName.setText(PreferencesHelper.getInstance().getCoinFavName());
         binding.textviewFavPrice.setText(PreferencesHelper.getInstance().getCoinFavPrice());
+        binding.textviewFavPrice.setText(String.format("%.2f", Double.parseDouble(PreferencesHelper.getInstance().getCoinFavPrice())));
     }
 
     private void setRecyclerAdapterCoin(RecyclerAdapterCoin recyclerAdapterCoin){
@@ -74,6 +85,7 @@ public class MainActivity extends AppCompatActivity {
     protected void onResume() {
         super.onResume();
         viewModel.getData().observe(this, coins -> {
+            System.out.println("TEST"+coins.size());
             recyclerAdapterCoin.setCoinList(coins);
         });
     }
