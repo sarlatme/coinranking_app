@@ -1,13 +1,18 @@
 package com.example.coinranking_app;
 
+import static android.Manifest.permission.POST_NOTIFICATIONS;
+
 import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.view.View;
 
@@ -22,14 +27,6 @@ import com.squareup.picasso.Picasso;
 import java.util.ArrayList;
 
 public class MainActivity extends AppCompatActivity {
-    private ActivityResultLauncher<String> requestPermissionLauncher =
-            registerForActivityResult(new ActivityResultContracts.RequestPermission(), isGranted -> {
-                if (isGranted) {
-
-                } else {
-
-                }
-            });
     private ActivityMainBinding binding;
 
     private IViewModel viewModel;
@@ -42,6 +39,8 @@ public class MainActivity extends AppCompatActivity {
         binding = ActivityMainBinding.inflate(getLayoutInflater());
         View view = binding.getRoot();
         setContentView(view);
+
+        checkNotificationsPermission();
 
         printFav(binding);
               
@@ -56,10 +55,15 @@ public class MainActivity extends AppCompatActivity {
         viewModel.generateListCoins();
     }
 
+    private void checkNotificationsPermission () {
+        if (ContextCompat.checkSelfPermission(this, POST_NOTIFICATIONS) == PackageManager.PERMISSION_DENIED) {
+            ActivityCompat.requestPermissions(this, new String[]{POST_NOTIFICATIONS}, 1);
+        }
+    }
     private void printFav(ActivityMainBinding binding){
         binding.textviewFavName.setText(PreferencesHelper.getInstance().getCoinFavName());
         binding.textviewFavPrice.setText(PreferencesHelper.getInstance().getCoinFavPrice());
-        binding.textviewFavPrice.setText(String.format("%.2f", Double.parseDouble(PreferencesHelper.getInstance().getCoinFavPrice())));
+        binding.textviewFavPrice.setText(PreferencesHelper.getInstance().getCoinFavPrice());
     }
 
     private void setRecyclerAdapterCoin(RecyclerAdapterCoin recyclerAdapterCoin){
@@ -68,7 +72,7 @@ public class MainActivity extends AppCompatActivity {
             public void onCoinLongClick(Coin coin) {
                 PreferencesHelper.getInstance().setCoinFav(coin.getName(), coin.getPrice());
                 binding.textviewFavName.setText(PreferencesHelper.getInstance().getCoinFavName());
-                binding.textviewFavPrice.setText(String.format("%.2f", Double.parseDouble(PreferencesHelper.getInstance().getCoinFavPrice())));
+                binding.textviewFavPrice.setText(PreferencesHelper.getInstance().getCoinFavPrice());
                 Picasso.get().load(coin.getIconUrl().replace("svg", "png")).into(binding.imageviewFavicon);
                 NotificationHelper.showPersistentNotification(MainActivity.this, "Cryptomonnaie favorite", PreferencesHelper.getInstance().getCoinFavName());
             }

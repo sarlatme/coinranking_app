@@ -45,6 +45,6 @@ public class PreferencesHelper {
 
     public void setCoinFav(String name, Double price) {
         preferences.edit().putString("coin.name", name).apply();
-        preferences.edit().putString("coin.price", price.toString()).apply();
+        preferences.edit().putString("coin.price", String.format("%.2f", price)).apply();
     }
 }
