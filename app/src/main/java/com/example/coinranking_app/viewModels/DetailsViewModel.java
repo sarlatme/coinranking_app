@@ -32,7 +32,7 @@ public class DetailsViewModel extends ViewModel implements IDetailsVewModel {
 
             @Override
             public void onFailure(Call<CoinResponse> call, Throwable t) {
-                //TODO
+                // TODO
             }
         });
     }

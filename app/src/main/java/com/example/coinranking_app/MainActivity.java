@@ -41,8 +41,6 @@ public class MainActivity extends AppCompatActivity {
         binding.recyclerviewCoins.setAdapter(recyclerAdapterCoin);
 
         viewModel = new ViewModelProvider(this).get(RetrofitViewModel.class);
-        observeMainData(viewModel);
-
         viewModel.generateListCoins();
 
     }
@@ -69,16 +67,11 @@ public class MainActivity extends AppCompatActivity {
             }
         });
     }
-
-    private void observeMainData(IViewModel viewModel){
-        viewModel.getData().observe(this, new Observer<CoinsListData>() {
-            @Override
-            public void onChanged(CoinsListData coinsList) {
-                if (coinsList != null) {
-                    recyclerAdapterCoin.setCoinList(coinsList.getCoins());
-                    recyclerAdapterCoin.notifyItemRangeInserted(0,coinsList.getCoins().size());
-                }
-            }
+    @Override
+    protected void onResume() {
+        super.onResume();
+        viewModel.getData().observe(this, coins -> {
+            recyclerAdapterCoin.setCoinList(coins);
         });
     }
 }

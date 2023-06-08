@@ -12,13 +12,12 @@ import com.example.coinranking_app.models.Coin;
 import java.util.List;
 
 public class RecyclerAdapterCoin extends RecyclerView.Adapter<RecyclerAdapterCoin.MyViewHolder> {
-    public void setListener(OnCoinClickListener listener) {
-        this.listener = listener;
-    }
-
     private OnCoinClickListener listener;
     private List<Coin> coinList;
     private int preferedCoin;
+    public void setListener(OnCoinClickListener listener) {
+        this.listener = listener;
+    }
 
     public RecyclerAdapterCoin(List<Coin> coinList) {
         this.coinList = coinList;
@@ -33,6 +32,7 @@ public class RecyclerAdapterCoin extends RecyclerView.Adapter<RecyclerAdapterCoi
         holder.bind(coin);
         holder.binding.getRoot().setOnLongClickListener(v -> {
             if (listener != null) {
+                // Envoie le coin pour le passer dans la nouvelle activité
                 listener.onCoinLongClick(coinList.get(position));
             }
             preferedCoin = holder.getBindingAdapterPosition();
@@ -40,6 +40,7 @@ public class RecyclerAdapterCoin extends RecyclerView.Adapter<RecyclerAdapterCoi
         });
         holder.binding.getRoot().setOnClickListener(v -> {
             if (listener != null) {
+                // Envoie le coin pour le passer dans la nouvelle activité
                 listener.onCoinClick(coinList.get(position));
             }
             preferedCoin = holder.getBindingAdapterPosition();
