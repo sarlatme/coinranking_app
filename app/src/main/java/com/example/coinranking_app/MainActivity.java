@@ -57,7 +57,7 @@ public class MainActivity extends AppCompatActivity {
             public void onCoinLongClick(Coin coin) {
                 PreferencesHelper.getInstance().setCoinFav(coin.getName(), coin.getPrice());
                 binding.textviewFavName.setText(PreferencesHelper.getInstance().getCoinFavName());
-                binding.textviewFavPrice.setText(String.format("%.2f", PreferencesHelper.getInstance().getCoinFavPrice()));
+                binding.textviewFavPrice.setText(String.format("%.2f", Double.parseDouble(PreferencesHelper.getInstance().getCoinFavPrice())));
                 Picasso.get().load(coin.getIconUrl().replace("svg", "png")).into(binding.imageviewFavicon);
                 NotificationHelper.showPersistentNotification(MainActivity.this, "Cryptomonnaie favorite", PreferencesHelper.getInstance().getCoinFavName());
             }
