@@ -15,6 +15,7 @@ import com.example.coinranking_app.models.CoinsListData;
 import com.example.coinranking_app.storage.PreferencesHelper;
 import com.example.coinranking_app.viewModels.IViewModel;
 import com.example.coinranking_app.viewModels.RetrofitViewModel;
+import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 
@@ -33,7 +34,8 @@ public class MainActivity extends AppCompatActivity {
         setContentView(view);
 
         printFav(binding);
-
+              
+        NotificationHelper.createNotificationChannel(this);
         recyclerAdapterCoin = new RecyclerAdapterCoin(new ArrayList<>());
         setRecyclerAdapterCoin(recyclerAdapterCoin);
 
@@ -55,7 +57,9 @@ public class MainActivity extends AppCompatActivity {
             public void onCoinLongClick(Coin coin) {
                 PreferencesHelper.getInstance().setCoinFav(coin.getName(), coin.getPrice());
                 binding.textviewFavName.setText(PreferencesHelper.getInstance().getCoinFavName());
-                binding.textviewFavPrice.setText(PreferencesHelper.getInstance().getCoinFavPrice());
+                binding.textviewFavPrice.setText(String.format("%.2f", PreferencesHelper.getInstance().getCoinFavPrice()));
+                Picasso.get().load(coin.getIconUrl().replace("svg", "png")).into(binding.imageviewFavicon);
+                NotificationHelper.showPersistentNotification(MainActivity.this, "Cryptomonnaie favorite", PreferencesHelper.getInstance().getCoinFavName());
             }
 
             @Override

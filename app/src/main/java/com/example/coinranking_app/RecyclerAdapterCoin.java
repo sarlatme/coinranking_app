@@ -8,6 +8,8 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.coinranking_app.databinding.ItemCoinBinding;
 import com.example.coinranking_app.models.Coin;
+import com.example.coinranking_app.storage.PreferencesHelper;
+import com.squareup.picasso.Picasso;
 
 import java.util.List;
 
@@ -64,7 +66,8 @@ public class RecyclerAdapterCoin extends RecyclerView.Adapter<RecyclerAdapterCoi
         }
         public void bind(Coin coin) {
             binding.textviewName.setText(coin.getName());
-            binding.textviewPrice.setText("Price : " + String.valueOf(coin.getPrice()));
+            binding.textviewPrice.setText("Price : " + String.format("%.2f", coin.getPrice()));
+            Picasso.get().load(coin.getIconUrl().replace("svg", "png")).into(binding.imageviewIcon);
         }
     }
 }
