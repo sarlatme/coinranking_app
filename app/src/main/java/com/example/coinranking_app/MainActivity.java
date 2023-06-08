@@ -18,6 +18,7 @@ import com.example.coinranking_app.models.CoinsListData;
 import com.example.coinranking_app.storage.PreferencesHelper;
 import com.example.coinranking_app.viewModels.IViewModel;
 import com.example.coinranking_app.viewModels.RetrofitViewModel;
+import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -39,6 +40,10 @@ public class MainActivity extends AppCompatActivity {
         View view = binding.getRoot();
         setContentView(view);
 
+        // Créer le canal de notification
+        NotificationHelper.createNotificationChannel(this);
+        NotificationHelper.showPersistentNotification(this, "Titre de la notification", "Message de la notification");
+
         //binding.textviewFavName.setText(PreferencesHelper.getInstance().getCoin().getName());
         //binding.textviewFavPrice.setText(Double.toString(PreferencesHelper.getInstance().getCoin().getPrice()));
         List<Coin> empty_list = new ArrayList<>();
@@ -49,8 +54,9 @@ public class MainActivity extends AppCompatActivity {
                 Toast.makeText(MainActivity.this, coin.getName(), Toast.LENGTH_SHORT).show();
                 PreferencesHelper.getInstance().setCoin(coin);
                 Log.d("SP",PreferencesHelper.getInstance().getCoin().getName());
+                Picasso.get().load(coin.getIconUrl().replace("svg", "png")).into(binding.imageviewFavicon);
                 binding.textviewFavName.setText(coin.getName());
-                binding.textviewFavPrice.setText(Double.toString(coin.getPrice()));
+                binding.textviewFavPrice.setText(String.format("%.2f", coin.getPrice()));
             }
 
             @Override
