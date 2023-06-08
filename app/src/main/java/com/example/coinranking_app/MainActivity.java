@@ -42,8 +42,6 @@ public class MainActivity extends AppCompatActivity {
 
         // Créer le canal de notification
         NotificationHelper.createNotificationChannel(this);
-        NotificationHelper.showPersistentNotification(this, "Titre de la notification", "Message de la notification");
-
         //binding.textviewFavName.setText(PreferencesHelper.getInstance().getCoin().getName());
         //binding.textviewFavPrice.setText(Double.toString(PreferencesHelper.getInstance().getCoin().getPrice()));
         List<Coin> empty_list = new ArrayList<>();
@@ -57,6 +55,7 @@ public class MainActivity extends AppCompatActivity {
                 Picasso.get().load(coin.getIconUrl().replace("svg", "png")).into(binding.imageviewFavicon);
                 binding.textviewFavName.setText(coin.getName());
                 binding.textviewFavPrice.setText(String.format("%.2f", coin.getPrice()));
+                NotificationHelper.showPersistentNotification(MainActivity.this, "Cryptomonnaie favorite", coin.getName());
             }
 
             @Override
