@@ -1,43 +1,96 @@
 package com.example.coinranking_app.viewModels;
 
+import android.app.Application;
+
+import androidx.annotation.NonNull;
+import androidx.lifecycle.AndroidViewModel;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
-import androidx.lifecycle.ViewModel;
 
+import com.example.coinranking_app.models.Coin;
+import com.example.coinranking_app.models.CoinResponse;
 import com.example.coinranking_app.models.CoinsListData;
 import com.example.coinranking_app.models.CoinsListResponse;
 import com.example.coinranking_app.network.RetrofitNetworkManager;
+import com.example.coinranking_app.storage.DataRepository;
+
+import java.util.List;
 
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class RetrofitViewModel extends ViewModel implements IViewModel {
+public class RetrofitViewModel extends AndroidViewModel implements IViewModel {
 
-    private final MutableLiveData<CoinsListData> data = new MutableLiveData<>();
+    private final MutableLiveData<Coin> dataCoin = new MutableLiveData<>();
 
-    public LiveData<CoinsListData> getData() {
+    private final DataRepository dataRepository;
+    private final LiveData<List<Coin>> data;
+
+    public RetrofitViewModel(@NonNull Application application) {
+        super(application);
+        dataRepository = new DataRepository(application);
+        data = dataRepository.getData();
+    }
+    public LiveData<List<Coin>> getDataCoins() {
         return data;
     }
 
-    public void generateListCoins(){
+    public LiveData<Coin> getDataCoin() { return dataCoin; }
+
+    @Override
+    public LiveData<List<Coin>> getData() {
+        return this.data;
+    }
+
+    public void generateListCoins() {
         RetrofitNetworkManager.coinRankingAPI.getCoinsList().enqueue(new Callback<CoinsListResponse>() {
             @Override
             public void onResponse(Call<CoinsListResponse> call, Response<CoinsListResponse> response) {
-                if(response.body() != null) {
-                    handleResponse(response.body());
+                if (response.body() != null) {
+                    handleCoinListResponse(response.body());
+                } else {
+                    handleCoinListError();
                 }
-                // TODO : gestion de l'erreur body = null
             }
 
             @Override
             public void onFailure(Call<CoinsListResponse> call, Throwable t) {
-                // TODO : gestion erreurs
+                t.printStackTrace();
+                handleCoinListError();
+
+                // TODO: gestion des erreurs
             }
         });
     }
 
-    private void handleResponse(CoinsListResponse response){
-        data.postValue(response.getData());
+    private void handleCoinListResponse(CoinsListResponse response) {
+        for(Coin coin : response.getData().getCoins()) {
+            dataRepository.insertData(coin);
+        }
+    }
+
+    private void handleCoinListError() {
+        // TODO: gestion des erreurs
+    }
+
+    public void generateCoin(String uuid) {
+        RetrofitNetworkManager.coinRankingAPI.getCoin(uuid).enqueue(new Callback<CoinResponse>() {
+            @Override
+            public void onResponse(Call<CoinResponse> call, Response<CoinResponse> response) {
+                if (response.body() != null) {
+                    handleCoinResponse(response.body());
+                }
+            }
+
+            @Override
+            public void onFailure(Call<CoinResponse> call, Throwable t) {
+                t.printStackTrace();
+            }
+        });
+    }
+
+    private void handleCoinResponse(CoinResponse response) {
+        //dataCoin.postValue(response.getData());
     }
 }
