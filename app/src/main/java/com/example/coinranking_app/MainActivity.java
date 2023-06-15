@@ -12,12 +12,13 @@ import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.Toast;
 
 import com.example.coinranking_app.databinding.ActivityMainBinding;
 import com.example.coinranking_app.models.Coin;
 import com.example.coinranking_app.storage.PreferencesHelper;
 import com.example.coinranking_app.viewModels.IViewModel;
-import com.example.coinranking_app.viewModels.RetrofitViewModel;
+import com.example.coinranking_app.viewModels.MainViewModel;
 import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
@@ -47,7 +48,7 @@ public class MainActivity extends AppCompatActivity {
         binding.recyclerviewCoins.setLayoutManager(new LinearLayoutManager(this));
         binding.recyclerviewCoins.setAdapter(recyclerAdapterCoin);
 
-        viewModel = new ViewModelProvider(this).get(RetrofitViewModel.class);
+        viewModel = new ViewModelProvider(this).get(MainViewModel.class);
         viewModel.generateListCoins();
     }
 
@@ -84,9 +85,16 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onResume() {
         super.onResume();
+
         viewModel.getData().observe(this, coins -> {
             System.out.println("TEST"+coins.size());
             recyclerAdapterCoin.setCoinList(coins);
+        });
+
+        viewModel.getError().observe(this, error -> {
+            if (error != null) {
+                Toast.makeText(MainActivity.this, error, Toast.LENGTH_LONG).show();
+            }
         });
     }
 }
