@@ -8,6 +8,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+import android.widget.Toast;
 
 import com.example.coinranking_app.databinding.ActivityDetailsBinding;
 import com.example.coinranking_app.models.Coin;
@@ -46,6 +47,16 @@ public class DetailsActivity extends AppCompatActivity {
                     binding.textViewPrice.setText("Price : " + coin.getCoin().getPrice());
                     binding.textViewRank.setText("Rank : " + coin.getCoin().getRank());
                     binding.textViewDescription.setText(coin.getCoin().getDescription());
+                }
+            }
+        });
+
+        viewModel.getError().observe(this, new Observer<String>() {
+            @Override
+            public void onChanged(String error) {
+                if (error != null) {
+                    Toast.makeText(DetailsActivity.this, error, Toast.LENGTH_LONG).show();
+                    finish();
                 }
             }
         });

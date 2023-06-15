@@ -15,9 +15,14 @@ import retrofit2.Response;
 public class DetailsViewModel extends ViewModel implements IDetailsVewModel {
 
     private final MutableLiveData<CoinData> data = new MutableLiveData<>();
+    private final MutableLiveData<String> error = new MutableLiveData<>();
 
     public LiveData<CoinData> getData() {
         return data;
+    }
+
+    public LiveData<String> getError() {
+        return error;
     }
 
     public void getDetailsCoin( String uuid ){
@@ -26,17 +31,23 @@ public class DetailsViewModel extends ViewModel implements IDetailsVewModel {
             public void onResponse(Call<CoinResponse> call, Response<CoinResponse> response) {
                 if(response.body() != null){
                     handleResponse(response.body());
+                } else {
+                    handleError(response.message());
                 }
             }
 
             @Override
             public void onFailure(Call<CoinResponse> call, Throwable t) {
-                // TODO
+                handleError(t.getMessage());
             }
         });
     }
 
     private void handleResponse(CoinResponse response){
         data.postValue(response.getData());
+    }
+
+    private void handleError(String errorMessage){
+        error.postValue(errorMessage);
     }
 }
