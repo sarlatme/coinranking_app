@@ -2,21 +2,24 @@ package com.example.coinranking_app;
 
 import static android.Manifest.permission.POST_NOTIFICATIONS;
 
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.app.ActivityCompat;
-import androidx.core.content.ContextCompat;
-import androidx.lifecycle.ViewModelProvider;
-import androidx.recyclerview.widget.LinearLayoutManager;
-
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Toast;
 
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
+import androidx.lifecycle.Observer;
+import androidx.lifecycle.ViewModelProvider;
+import androidx.recyclerview.widget.LinearLayoutManager;
+
 import com.example.coinranking_app.databinding.ActivityMainBinding;
 import com.example.coinranking_app.models.Coin;
+import com.example.coinranking_app.models.CoinData;
 import com.example.coinranking_app.storage.PreferencesHelper;
+import com.example.coinranking_app.viewModels.DetailsViewModel;
 import com.example.coinranking_app.viewModels.IViewModel;
 import com.example.coinranking_app.viewModels.MainViewModel;
 import com.squareup.picasso.Picasso;
@@ -40,7 +43,7 @@ public class MainActivity extends AppCompatActivity {
         checkNotificationsPermission();
 
         printFav(binding);
-              
+
         NotificationHelper.createNotificationChannel(this);
         recyclerAdapterCoin = new RecyclerAdapterCoin(new ArrayList<>());
         setRecyclerAdapterCoin(recyclerAdapterCoin);
@@ -50,20 +53,29 @@ public class MainActivity extends AppCompatActivity {
 
         viewModel = new ViewModelProvider(this).get(MainViewModel.class);
         viewModel.generateListCoins();
+        refreshAction();
     }
 
-    private void checkNotificationsPermission () {
+    private void checkNotificationsPermission() {
         if (ContextCompat.checkSelfPermission(this, POST_NOTIFICATIONS) == PackageManager.PERMISSION_DENIED) {
             ActivityCompat.requestPermissions(this, new String[]{POST_NOTIFICATIONS}, 1);
         }
     }
-    private void printFav(ActivityMainBinding binding){
+
+    private void refreshAction() {
+        binding.sync.setOnClickListener((v) -> {
+            viewModel.generateListCoins();
+            Toast.makeText(MainActivity.this, "Sync completed", Toast.LENGTH_LONG).show();
+        });
+    }
+
+    private void printFav(ActivityMainBinding binding) {
         binding.textviewFavName.setText(PreferencesHelper.getInstance().getCoinFavName());
         binding.textviewFavPrice.setText(PreferencesHelper.getInstance().getCoinFavPrice());
         binding.textviewFavPrice.setText(PreferencesHelper.getInstance().getCoinFavPrice());
     }
 
-    private void setRecyclerAdapterCoin(RecyclerAdapterCoin recyclerAdapterCoin){
+    private void setRecyclerAdapterCoin(RecyclerAdapterCoin recyclerAdapterCoin) {
         recyclerAdapterCoin.setListener(new OnCoinClickListener() {
             @Override
             public void onCoinLongClick(Coin coin) {
@@ -71,7 +83,7 @@ public class MainActivity extends AppCompatActivity {
                 binding.textviewFavName.setText(PreferencesHelper.getInstance().getCoinFavName());
                 binding.textviewFavPrice.setText(PreferencesHelper.getInstance().getCoinFavPrice());
                 Picasso.get().load(coin.getIconUrl().replace("svg", "png")).into(binding.imageviewFavicon);
-                NotificationHelper.showPersistentNotification(MainActivity.this, PreferencesHelper.getInstance().getCoinFavName(),"Valeur actuelle : " + PreferencesHelper.getInstance().getCoinFavPrice());
+                NotificationHelper.showPersistentNotification(MainActivity.this, PreferencesHelper.getInstance().getCoinFavName(), "Valeur actuelle : " + PreferencesHelper.getInstance().getCoinFavPrice());
             }
 
             @Override
@@ -82,12 +94,13 @@ public class MainActivity extends AppCompatActivity {
             }
         });
     }
+
     @Override
     protected void onResume() {
         super.onResume();
 
         viewModel.getData().observe(this, coins -> {
-            System.out.println("TEST"+coins.size());
+            System.out.println("TEST" + coins.size());
             recyclerAdapterCoin.setCoinList(coins);
         });
 
