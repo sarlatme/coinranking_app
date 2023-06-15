@@ -11,15 +11,12 @@ import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
-import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
 import com.example.coinranking_app.databinding.ActivityMainBinding;
 import com.example.coinranking_app.models.Coin;
-import com.example.coinranking_app.models.CoinData;
 import com.example.coinranking_app.storage.PreferencesHelper;
-import com.example.coinranking_app.viewModels.DetailsViewModel;
 import com.example.coinranking_app.viewModels.IViewModel;
 import com.example.coinranking_app.viewModels.MainViewModel;
 import com.squareup.picasso.Picasso;
@@ -31,6 +28,8 @@ public class MainActivity extends AppCompatActivity {
 
     private IViewModel viewModel;
     private RecyclerAdapterCoin recyclerAdapterCoin;
+
+    private Intent serviceIntent;
 
 
     @Override
@@ -44,7 +43,8 @@ public class MainActivity extends AppCompatActivity {
 
         printFav(binding);
 
-        NotificationHelper.createNotificationChannel(this);
+        serviceIntent = new Intent(this, ForegroundService.class);
+
         recyclerAdapterCoin = new RecyclerAdapterCoin(new ArrayList<>());
         setRecyclerAdapterCoin(recyclerAdapterCoin);
 
@@ -71,19 +71,17 @@ public class MainActivity extends AppCompatActivity {
 
     private void printFav(ActivityMainBinding binding) {
         binding.textviewFavName.setText(PreferencesHelper.getInstance().getCoinFavName());
-        binding.textviewFavPrice.setText(PreferencesHelper.getInstance().getCoinFavPrice());
-        binding.textviewFavPrice.setText(PreferencesHelper.getInstance().getCoinFavPrice());
+        binding.textviewFavPrice.setText(PreferencesHelper.getInstance().getCoinFavPrice() + " $");
     }
 
     private void setRecyclerAdapterCoin(RecyclerAdapterCoin recyclerAdapterCoin) {
         recyclerAdapterCoin.setListener(new OnCoinClickListener() {
             @Override
             public void onCoinLongClick(Coin coin) {
-                PreferencesHelper.getInstance().setCoinFav(coin.getName(), coin.getPrice());
+                PreferencesHelper.getInstance().setCoinFav(coin.getUuid(), coin.getName(), coin.getPrice());
                 binding.textviewFavName.setText(PreferencesHelper.getInstance().getCoinFavName());
-                binding.textviewFavPrice.setText(PreferencesHelper.getInstance().getCoinFavPrice());
+                binding.textviewFavPrice.setText(PreferencesHelper.getInstance().getCoinFavPrice() + " $");
                 Picasso.get().load(coin.getIconUrl().replace("svg", "png")).into(binding.imageviewFavicon);
-                NotificationHelper.showPersistentNotification(MainActivity.this, PreferencesHelper.getInstance().getCoinFavName(), "Valeur actuelle : " + PreferencesHelper.getInstance().getCoinFavPrice());
             }
 
             @Override
@@ -109,5 +107,7 @@ public class MainActivity extends AppCompatActivity {
                 Toast.makeText(MainActivity.this, error, Toast.LENGTH_LONG).show();
             }
         });
+
+        startService(serviceIntent);
     }
 }

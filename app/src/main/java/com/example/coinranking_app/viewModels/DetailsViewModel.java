@@ -1,8 +1,11 @@
 package com.example.coinranking_app.viewModels;
 
+import android.app.Application;
+
+import androidx.annotation.NonNull;
+import androidx.lifecycle.AndroidViewModel;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
-import androidx.lifecycle.ViewModel;
 
 import com.example.coinranking_app.models.CoinData;
 import com.example.coinranking_app.models.CoinResponse;
@@ -12,10 +15,14 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class DetailsViewModel extends ViewModel implements IDetailsVewModel {
+public class DetailsViewModel extends AndroidViewModel implements IDetailsViewModel {
 
     private final MutableLiveData<CoinData> data = new MutableLiveData<>();
     private final MutableLiveData<String> error = new MutableLiveData<>();
+
+    public DetailsViewModel(@NonNull Application application) {
+        super(application);
+    }
 
     public LiveData<CoinData> getData() {
         return data;
@@ -25,11 +32,11 @@ public class DetailsViewModel extends ViewModel implements IDetailsVewModel {
         return error;
     }
 
-    public void getDetailsCoin( String uuid ){
+    public void getDetailsCoin(String uuid) {
         RetrofitNetworkManager.coinRankingAPI.getCoin(uuid).enqueue(new Callback<CoinResponse>() {
             @Override
             public void onResponse(Call<CoinResponse> call, Response<CoinResponse> response) {
-                if(response.body() != null){
+                if (response.body() != null) {
                     handleResponse(response.body());
                 } else {
                     handleError(response.message());
@@ -43,11 +50,11 @@ public class DetailsViewModel extends ViewModel implements IDetailsVewModel {
         });
     }
 
-    private void handleResponse(CoinResponse response){
+    private void handleResponse(CoinResponse response) {
         data.postValue(response.getData());
     }
 
-    private void handleError(String errorMessage){
+    private void handleError(String errorMessage) {
         error.postValue(errorMessage);
     }
 }

@@ -10,6 +10,7 @@ import retrofit2.http.Path;
 public interface CoinRankingAPI {
     @GET("/coins")
     Call<CoinsListResponse> getCoinsList();
+
     @GET("/coin/{uuid}")
-    Call<CoinResponse> getCoin(@Path("uuid") String uuid );
+    Call<CoinResponse> getCoin(@Path("uuid") String uuid);
 }

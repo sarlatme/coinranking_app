@@ -18,11 +18,7 @@ public class AuthInterceptor implements Interceptor {
     @NonNull
     @Override
     public Response intercept(@NonNull Chain chain) throws IOException {
-        Request request = new Request.Builder(chain.request())
-                .addHeader(HOST_HEADER_NAME, HOST_HEADER_VALUE)
-                .addHeader(KEY_HEADER_NAME, API_KEY)
-                .build();
-
+        Request request = new Request.Builder(chain.request()).addHeader(HOST_HEADER_NAME, HOST_HEADER_VALUE).addHeader(KEY_HEADER_NAME, API_KEY).build();
         return chain.proceed(request);
     }
 }

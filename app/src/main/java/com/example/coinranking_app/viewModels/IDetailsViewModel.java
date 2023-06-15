@@ -4,7 +4,7 @@ import androidx.lifecycle.LiveData;
 
 import com.example.coinranking_app.models.CoinData;
 
-public interface IDetailsVewModel {
+public interface IDetailsViewModel {
     LiveData<CoinData> getData();
     LiveData<String> getError();
 

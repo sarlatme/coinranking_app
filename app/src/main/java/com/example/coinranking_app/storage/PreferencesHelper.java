@@ -28,12 +28,18 @@ public class PreferencesHelper {
         return name;
     }
 
-    public String getCoinFavPrice(){
+    public String getCoinFavPrice() {
         String price = preferences.getString("coin.price", null);
         return price;
     }
 
-    public void setCoinFav(String name, Double price) {
+    public String getCoinFavUuid() {
+        String uuid = preferences.getString("coin.uuid", null);
+        return uuid;
+    }
+
+    public void setCoinFav(String uuid, String name, Double price) {
+        preferences.edit().putString("coin.uuid", uuid).apply();
         preferences.edit().putString("coin.name", name).apply();
         preferences.edit().putString("coin.price", String.format("%.2f", price)).apply();
     }

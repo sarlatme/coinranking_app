@@ -30,11 +30,14 @@ public class MainViewModel extends AndroidViewModel implements IViewModel {
         dataRepository = new DataRepository(application);
         data = dataRepository.getData();
     }
+
     public LiveData<List<Coin>> getDataCoins() {
         return data;
     }
 
-    public LiveData<Coin> getDataCoin() { return dataCoin; }
+    public LiveData<Coin> getDataCoin() {
+        return dataCoin;
+    }
 
     public LiveData<String> getError() {
         return error;
@@ -68,7 +71,7 @@ public class MainViewModel extends AndroidViewModel implements IViewModel {
     }
 
     private void handleCoinListResponse(CoinsListResponse response) {
-        for(Coin coin : response.getData().getCoins()) {
+        for (Coin coin : response.getData().getCoins()) {
             dataRepository.insertData(coin);
         }
     }

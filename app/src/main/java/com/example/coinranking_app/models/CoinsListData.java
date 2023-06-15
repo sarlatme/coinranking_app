@@ -6,7 +6,9 @@ public class CoinsListData {
 
     private List<Coin> coins;
 
-    public List<Coin> getCoins(){ return coins; }
+    public List<Coin> getCoins() {
+        return coins;
+    }
 
 
 }

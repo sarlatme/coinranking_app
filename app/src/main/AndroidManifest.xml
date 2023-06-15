@@ -17,6 +17,12 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Coinranking_app"
         tools:targetApi="31">
+        <service
+            android:name=".ForegroundService"
+            android:enabled="true"
+            android:exported="false"
+            android:foregroundServiceType="dataSync"/>
+
         <activity
             android:name=".DetailsActivity"
             android:exported="false" />
@@ -25,7 +31,6 @@
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>

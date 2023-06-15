@@ -14,12 +14,12 @@ import com.example.coinranking_app.databinding.ActivityDetailsBinding;
 import com.example.coinranking_app.models.Coin;
 import com.example.coinranking_app.models.CoinData;
 import com.example.coinranking_app.viewModels.DetailsViewModel;
-import com.example.coinranking_app.viewModels.IDetailsVewModel;
+import com.example.coinranking_app.viewModels.IDetailsViewModel;
 
 public class DetailsActivity extends AppCompatActivity {
 
     private ActivityDetailsBinding binding;
-    private IDetailsVewModel viewModel;
+    private IDetailsViewModel viewModel;
 
     private Button button;
 
