@@ -4,7 +4,6 @@ import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
-import com.example.coinranking_app.models.Coin;
 import com.example.coinranking_app.models.CoinData;
 import com.example.coinranking_app.models.CoinResponse;
 import com.example.coinranking_app.network.RetrofitNetworkManager;

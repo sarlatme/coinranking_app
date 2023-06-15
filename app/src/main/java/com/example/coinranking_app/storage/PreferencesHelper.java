@@ -3,17 +3,7 @@ package com.example.coinranking_app.storage;
 import android.content.Context;
 import android.content.SharedPreferences;
 
-import androidx.lifecycle.ViewModelProvider;
-
 import com.example.coinranking_app.CoinRankingApp;
-import com.example.coinranking_app.DetailsActivity;
-import com.example.coinranking_app.MainActivity;
-import com.example.coinranking_app.models.Coin;
-import com.example.coinranking_app.viewModels.DetailsViewModel;
-import com.example.coinranking_app.viewModels.IDetailsVewModel;
-import com.google.gson.Gson;
-
-import java.util.List;
 
 public class PreferencesHelper {
 

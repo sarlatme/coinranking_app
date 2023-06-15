@@ -8,7 +8,6 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.coinranking_app.databinding.ItemCoinBinding;
 import com.example.coinranking_app.models.Coin;
-import com.example.coinranking_app.storage.PreferencesHelper;
 import com.squareup.picasso.Picasso;
 
 import java.util.List;

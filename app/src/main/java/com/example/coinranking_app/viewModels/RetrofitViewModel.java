@@ -9,7 +9,6 @@ import androidx.lifecycle.MutableLiveData;
 
 import com.example.coinranking_app.models.Coin;
 import com.example.coinranking_app.models.CoinResponse;
-import com.example.coinranking_app.models.CoinsListData;
 import com.example.coinranking_app.models.CoinsListResponse;
 import com.example.coinranking_app.network.RetrofitNetworkManager;
 import com.example.coinranking_app.storage.DataRepository;

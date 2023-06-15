@@ -2,12 +2,9 @@ package com.example.coinranking_app;
 
 import static android.Manifest.permission.POST_NOTIFICATIONS;
 
-import androidx.activity.result.ActivityResultLauncher;
-import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
-import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
@@ -18,7 +15,6 @@ import android.view.View;
 
 import com.example.coinranking_app.databinding.ActivityMainBinding;
 import com.example.coinranking_app.models.Coin;
-import com.example.coinranking_app.models.CoinsListData;
 import com.example.coinranking_app.storage.PreferencesHelper;
 import com.example.coinranking_app.viewModels.IViewModel;
 import com.example.coinranking_app.viewModels.RetrofitViewModel;

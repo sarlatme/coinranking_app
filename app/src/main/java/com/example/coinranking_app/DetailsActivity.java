@@ -6,16 +6,12 @@ import androidx.lifecycle.ViewModelProvider;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 
 import com.example.coinranking_app.databinding.ActivityDetailsBinding;
 import com.example.coinranking_app.models.Coin;
 import com.example.coinranking_app.models.CoinData;
-import com.example.coinranking_app.storage.AppDatabase;
-import com.example.coinranking_app.storage.CoinDao;
-import com.example.coinranking_app.storage.DataRepository;
 import com.example.coinranking_app.viewModels.DetailsViewModel;
 import com.example.coinranking_app.viewModels.IDetailsVewModel;
 
