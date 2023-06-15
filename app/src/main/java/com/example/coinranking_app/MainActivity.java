@@ -71,7 +71,7 @@ public class MainActivity extends AppCompatActivity {
                 binding.textviewFavName.setText(PreferencesHelper.getInstance().getCoinFavName());
                 binding.textviewFavPrice.setText(PreferencesHelper.getInstance().getCoinFavPrice());
                 Picasso.get().load(coin.getIconUrl().replace("svg", "png")).into(binding.imageviewFavicon);
-                NotificationHelper.showPersistentNotification(MainActivity.this, "Cryptomonnaie favorite", PreferencesHelper.getInstance().getCoinFavName());
+                NotificationHelper.showPersistentNotification(MainActivity.this, PreferencesHelper.getInstance().getCoinFavName(),"Valeur actuelle : " + PreferencesHelper.getInstance().getCoinFavPrice());
             }
 
             @Override
