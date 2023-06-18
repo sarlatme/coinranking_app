@@ -15,6 +15,7 @@ import java.util.List;
 public class RecyclerAdapterCoin extends RecyclerView.Adapter<RecyclerAdapterCoin.MyViewHolder> {
     private OnCoinClickListener listener;
     private List<Coin> coinList;
+    // TODO : inutilisé
     private int preferedCoin;
 
     public void setListener(OnCoinClickListener listener) {

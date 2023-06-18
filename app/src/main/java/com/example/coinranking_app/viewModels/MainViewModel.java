@@ -31,10 +31,12 @@ public class MainViewModel extends AndroidViewModel implements IViewModel {
         data = dataRepository.getData();
     }
 
+    // TODO : doublon inutilisé
     public LiveData<List<Coin>> getDataCoins() {
         return data;
     }
 
+    // TODO : pas utilisé
     public LiveData<Coin> getDataCoin() {
         return dataCoin;
     }

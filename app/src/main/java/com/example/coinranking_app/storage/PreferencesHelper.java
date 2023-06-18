@@ -24,6 +24,7 @@ public class PreferencesHelper {
     }
 
     public String getCoinFavName() {
+        // TODO : il est préférable d'utiliser des constantes pour les clés
         String name = preferences.getString("coin.name", null);
         return name;
     }

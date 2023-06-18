@@ -78,7 +78,9 @@ public class MainActivity extends AppCompatActivity {
         recyclerAdapterCoin.setListener(new OnCoinClickListener() {
             @Override
             public void onCoinLongClick(Coin coin) {
+                // TODO : dommage d'utiliser les preferences ici, on a répété plusieurs fois qu'il était préférable de mettre ça dans le VM
                 PreferencesHelper.getInstance().setCoinFav(coin.getUuid(), coin.getName(), coin.getPrice());
+                // TODO : inutile de retourner chercher dans les prefs ces valeurs, on les a toujours dans le coin
                 binding.textviewFavName.setText(PreferencesHelper.getInstance().getCoinFavName());
                 binding.textviewFavPrice.setText(PreferencesHelper.getInstance().getCoinFavPrice() + " $");
                 Picasso.get().load(coin.getIconUrl().replace("svg", "png")).into(binding.imageviewFavicon);
@@ -87,6 +89,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onCoinClick(Coin coin) {
                 Intent intent = new Intent(MainActivity.this, DetailsActivity.class);
+                // TODO : constante pour les clés du bundle
                 intent.putExtra("COIN", coin.getUuid());
                 MainActivity.this.startActivity(intent);
             }

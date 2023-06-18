@@ -23,7 +23,9 @@ public class DetailsActivity extends AppCompatActivity {
 
     private Button button;
 
+    // TODO : inutile de conserver cette valeur ici, elle est déjà envoyée au VM
     private String uuid;
+    // TODO : pas utilisé et pas à sa place, c'est le VM qui garde les données
     private Coin coin;
 
     @Override
@@ -61,6 +63,7 @@ public class DetailsActivity extends AppCompatActivity {
             }
         });
 
+        // TODO : pourquoi utiliser findViewById et pas binding.buttonBack ???
         button = findViewById(R.id.button_back);
         button.setOnClickListener(new View.OnClickListener() {
             @Override

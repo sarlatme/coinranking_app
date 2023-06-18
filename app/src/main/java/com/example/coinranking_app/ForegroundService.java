@@ -66,6 +66,7 @@ public class ForegroundService extends Service {
     public void onDestroy() {
         isRunning = false;
         handlerThread.quit();
+        // TODO : il faut remove les observers dans le onDestroy
         super.onDestroy();
     }
 
